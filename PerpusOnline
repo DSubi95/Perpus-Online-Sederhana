@@ -1,0 +1,115 @@
+perpustakaan_online = {}
+
+def menu_utama():
+    while True:
+        print("~" * 120)
+        print("\n\n=== MENU PERPUSTAKAAN === \n\nSilahkan Pilih Menu Anda:\n")
+        print("1. Tambah Data Buku")
+        print("2. Tampilkan Data Buku")
+        print("3. Perbarui Data Buku")
+        print("4. Hapus Data Buku")
+        print("5. Keluar")
+
+        pilihan = input("\nPilih menu tersebut ( 1/2/3/4/5 ): ")
+
+        if pilihan == '1':
+            tambah_data()
+        elif pilihan == '2':
+            tampilkan_data()
+        elif pilihan == '3':
+            perbarui_data()
+        elif pilihan == '4':
+            hapus_data()
+        elif pilihan == '5':
+            print("\nTerimakasih, bye.. bye..")
+            break
+        else:
+            print("\nMaaf, pilihan tidak sesuai menu. \nSilakan pilih sesuai menu yang tersedia!\n\n")
+        
+
+def tambah_data():
+    print("\n=== Tambah Data Buku ===\n\n")
+    while True:
+        id_buku = input("Masukkan ID Buku (unik): ")
+        if not id_buku:
+            print("Maaf ID Buku tidak boleh kosong!")
+        elif id_buku in perpustakaan_online:
+            print("Maaf ID Buku sudah ada, gunakan ID lain.")
+        else:
+            break
+
+    judul = input("Masukkan Judul Buku: ")
+    penulis = input("Masukkan Nama Penulis: ")
+    tahun = input("Masukkan Tahun Terbit: ")
+    genre = input("Masukkan Genre Buku: ")
+
+    perpustakaan_online[id_buku] ={
+    "Judul": judul,
+    "Penulis": penulis,
+    "Tahun": tahun,
+    "Genre": genre
+    }
+    print("\nSelamat, data telah berhasil ditambahkan ke Perpustakaan Online!\n")
+
+def tampilkan_data():
+    print("\n=== Daftar Buku di Perpustakaan ===\n\n")
+    if not perpustakaan_online:
+        print("\nMaaf tidak ada data buku saat ini..\n")
+        return
+        
+
+    print("-" * 120)
+    print(f"  {'ID Buku':<10}|  {'Judul':<25}|  {'Penulis':<25}|  {'Tahun':<10}|  {'Genre':<20}")
+    print("-" * 120)
+
+    for id_buku, info in perpustakaan_online.items():
+        print(f"  {id_buku:<10}|  {info['Judul']:<25}|  {info['Penulis']:<25}|  {info['Tahun']:<10}|  {info['Genre']:<20}")
+        print("-" * 120)
+
+def perbarui_data():
+    print("\n=== Perbarui Data Buku ===")
+    id_buku = input("\nSilahkan masukkan ID Buku yang ingin diperbarui: ")
+    if not perpustakaan_online:
+        print("\nMaaf tidak ada data buku saat ini..\n")
+        return
+    if id_buku not in perpustakaan_online:
+        print("\nMaaf ID Buku tidak ditemukan.\n")
+        perbarui_data()
+        return
+
+    print("\nSilahkan masukkan data baru (*kosongkan jika tidak ingin diubah):")
+    judul = input(f"Judul baru ({perpustakaan_online[id_buku]['Judul']}): ")
+    penulis = input(f"Penulis baru ({perpustakaan_online[id_buku]['Penulis']}): ")
+    tahun = input(f"Tahun baru ({perpustakaan_online[id_buku]['Tahun']}): ")
+    genre = input(f"Genre baru ({perpustakaan_online[id_buku]['Genre']}): ")
+
+    if judul:
+        perpustakaan_online[id_buku]['Judul'] = judul
+    if penulis:
+        perpustakaan_online[id_buku]['Penulis'] = penulis
+    if tahun:
+        perpustakaan_online[id_buku]['Tahun'] = tahun
+    if genre:
+        perpustakaan_online[id_buku]['Genre'] = genre
+
+    print("\nSelamat, data berhasil diperbarui!\nCek Update >>>\n")
+    tampilkan_data()
+
+def hapus_data():
+    print("\n=== Hapus Data Buku ===")
+    id_buku = input("\nSilahkan masukkan ID buku yang ingin dihapus: ")
+    if not perpustakaan_online:
+        print("\nMaaf tidak ada data buku saat ini..\n")
+        return
+    if id_buku in perpustakaan_online:
+        del perpustakaan_online[id_buku]
+        print("\nSelamat, data sudah berhasil dihapus!\nCek Menu : 2")
+        return
+    else:
+        print("\nMaaf ID Buku tidak ditemukan.\n")
+        hapus_data()
+
+print("~" * 120)
+print("\n\t\t\t\t SELAMAT DATANG DI PROGRAM DATA PERPUSTAKAAN ONLINE\n")
+
+menu_utama()
